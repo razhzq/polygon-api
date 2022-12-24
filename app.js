@@ -101,7 +101,11 @@ const {
 } = require('./controller/stocks')
 
 //ROUTES
-app.get('/', () => console.log('Welcome to pricing api'))
+app.get('/', (_, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Welcome to Aped APIs!\n');
+})
 //crypto
 app.get('/cryptos', getExchangeRateOfCrypto)
 app.get('/crypto/:name', getExchangeRateOfCryptoByName)
