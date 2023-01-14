@@ -27,12 +27,11 @@ module.exports.getExchangeRatesOfForex = async (_, res) => {
 			const labelString = `C:${frx.toUpperCase()}USD`;
 			tickers.map((item) => {
 				const { ticker, todaysChangePerc, day, lastQuote} = item;
-				const { o } = day;
-				const { t } = lastQuote;
+				const { a, t } = lastQuote;
 				if (ticker === labelString) {
 					const label = `${frx.toUpperCase()}/USD`;
 					dataPolygonForex.push({
-						[label]: o,
+						[label]: a,
 						changes_24hrs: todaysChangePerc,
 						last_refreshed: new Date(t)
 					})
