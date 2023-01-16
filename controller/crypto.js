@@ -104,15 +104,15 @@ module.exports.getExchangeRateOfCryptoByName = async (req, res) => {
         message: 'not found',
       })
     } else {
-      const respAlphaCrypto = await getSpecificCrypto(name)
-      const newData = respAlphaCrypto?.data['Realtime Currency Exchange Rate']
-      const symbol =
-        newData['1. From_Currency Code'] + '/' + newData['3. To_Currency Code']
+      const respPolygonCrypto = await getSpecificCrypto(name)
+      const newData = respPolygonCrypto?.data
+      const { last } = newData
+      const symbol = newData.symbol.replace('-', '/')
 
       res.status(200).json({
         success: true,
-        [symbol]: Number(newData['5. Exchange Rate']),
-        last_refreshed: newData['6. Last Refreshed'],
+        [symbol]: last.price,
+        last_refreshed: new Date(last.timestamp),
       })
     }
   } catch (err) {
